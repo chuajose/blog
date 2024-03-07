@@ -10,7 +10,7 @@ use App\Domain\Blog\Model\Post;
 use App\Domain\Shared\Messenger\MessengerBusInterface;
 use App\Domain\User\Model\User;
 
-readonly class CreatePostUseCase
+class CreatePostUseCase
 {
     public function __construct(private BlogRepository $blogRepository, private MessengerBusInterface $messengerBus)
     {

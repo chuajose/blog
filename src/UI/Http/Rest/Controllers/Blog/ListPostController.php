@@ -11,6 +11,7 @@ use App\Domain\Shared\Criteria\OrderBy;
 use App\Domain\Shared\Criteria\OrderType;
 use App\UI\Http\Rest\Controllers\BaseRestController;
 use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,6 +57,6 @@ class ListPostController extends BaseRestController
         // TODO: Recoger los datos para el order del request
         $posts = $this->listPostUseCase->execute(new Criteria(new Order(new OrderBy('createdAt'), OrderType::ASC), $this->getPage(), $this->getLimit()));
 
-        return $this->json(['items' => $posts->getIterator(), 'total' => $posts->total()]);
+        return new JsonResponse(['items' => $posts->getIterator(), 'total' => $posts->total()]);
     }
 }

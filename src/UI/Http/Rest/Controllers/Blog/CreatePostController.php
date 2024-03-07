@@ -11,6 +11,7 @@ use App\Domain\User\Exception\UserNotFound;
 use App\Domain\User\UserRepository;
 use App\UI\Http\Rest\Controllers\BaseRestController;
 use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,7 +37,7 @@ class CreatePostController extends BaseRestController
     #[OA\RequestBody(description: 'Body to create a post', required: true, content: new OA\MediaType(mediaType: 'application/x-www-form-urlencoded', schema: new OA\Schema(required: ['user_id', 'title', 'body'], properties: [new OA\Property(property: 'user_id', description: 'User id', type: 'string', format: 'uuid'), new OA\Property(property: 'title', description: 'Title of the post', type: 'string'), new OA\Property(property: 'body', description: 'Body of the post', type: 'string')], type: 'object')))]
     #[OA\Tag(name: 'Blog')]
     #[Route('/v1/blog', methods: [Request::METHOD_POST])]
-    public function index(Request $request): Response
+    public function __invoke(Request $request): Response
     {
         $this->validateRequest($request);
 
@@ -50,7 +51,7 @@ class CreatePostController extends BaseRestController
 
         $this->createPostUseCase->execute($dto, $user);
 
-        return $this->json(['message' => 'Post created'], 201);
+        return new JsonResponse(['message' => 'Post Created'], status:Response::HTTP_CREATED);
     }
 
     /**

@@ -23,7 +23,7 @@ class BlogController extends AbstractController
     public function __invoke(int $page = 1): Response
     {
         $limit = 10;
-        $posts = $this->listPostUseCase->execute(new Criteria(new Order(new OrderBy('createdAt'), OrderType::ASC), $page, $limit));
+        $posts = $this->listPostUseCase->execute(new Criteria(new Order(new OrderBy('createdAt'), OrderType::DESC), $page, $limit));
 
         return $this->render('blog/list.html.twig', [
             'posts' => $posts->getIterator(),
