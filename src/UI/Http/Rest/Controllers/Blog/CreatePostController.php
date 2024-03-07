@@ -10,10 +10,11 @@ use App\Domain\Blog\Exception\PostValidation;
 use App\Domain\User\Exception\UserNotFound;
 use App\Domain\User\UserRepository;
 use App\UI\Http\Rest\Controllers\BaseRestController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validation;
 
@@ -21,8 +22,10 @@ class CreatePostController extends BaseRestController
 {
     public function __construct(
         private readonly CreatePostUseCase $createPostUseCase,
-        private readonly UserRepository $userRepository
+        private readonly UserRepository $userRepository,
+        RequestStack $request
     ) {
+        parent::__construct($request);
     }
 
     /**
@@ -36,9 +39,9 @@ class CreatePostController extends BaseRestController
 
         $data = $request->request->all();
 
-        $user = $this->userRepository->find((int) $data['user_id']);
+        $user = $this->userRepository->find(Uuid::fromString($data['user_id']));
         if (!$user) {
-            throw new UserNotFound((int) $data['user_id']);
+            throw new UserNotFound($data['user_id']);
         }
         $dto = PostDto::create($data['title'], $data['body']);
 
@@ -56,6 +59,7 @@ class CreatePostController extends BaseRestController
         $constraint = new Assert\Collection([
             'user_id' => [
                 new Assert\NotBlank(),
+                new Assert\Uuid()
             ],
             'body' => [
                 new Assert\NotBlank(),

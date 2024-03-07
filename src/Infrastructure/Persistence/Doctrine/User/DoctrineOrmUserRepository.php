@@ -5,6 +5,7 @@ namespace App\Infrastructure\Persistence\Doctrine\User;
 use App\Domain\User\Model\User;
 use App\Domain\User\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Uid\Uuid;
 
 readonly class DoctrineOrmUserRepository implements UserRepository
 {
@@ -12,9 +13,9 @@ readonly class DoctrineOrmUserRepository implements UserRepository
     {
     }
 
-    public function find(int $id): ?User
+    public function find(Uuid $id): ?User
     {
-        return $this->entityManager->getRepository(User::class)->find($id);
+        return $this->entityManager->getRepository(User::class)->find($id->toRfc4122());
     }
 
     public function create(User $user): void

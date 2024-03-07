@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace App\Domain\User\Model;
 
+use Symfony\Component\Uid\Uuid;
+
 class User implements \JsonSerializable
 {
-    private int $id;
+    private Uuid $id;
     private string $name;
     private string $email;
 
-    private function __construct(int $id, string $name, string $email)
+    private function __construct(Uuid $id, string $name, string $email)
     {
         $this->id = $id;
         $this->name = $name;
@@ -19,10 +21,10 @@ class User implements \JsonSerializable
 
     public static function create(string $name, string $email): self
     {
-        return new self(0, $name, $email);
+        return new self(Uuid::v4(), $name, $email);
     }
 
-    public function id(): int
+    public function id(): Uuid
     {
         return $this->id;
     }
@@ -44,7 +46,7 @@ class User implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'id' => $this->id,
+            'id' => $this->id()->toRfc4122(),
             'name' => $this->name,
             'email' => $this->email,
         ];

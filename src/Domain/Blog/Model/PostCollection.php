@@ -9,7 +9,7 @@ class PostCollection
     /**
      * @param array<int, Post> $items
      */
-    public function __construct(private array $items)
+    public function __construct(private array $items, private readonly int $total)
     {
         foreach ($items as $item) {
             if (!$item instanceof Post) {
@@ -18,10 +18,16 @@ class PostCollection
         }
     }
 
+
     /** @return \ArrayIterator<int, Post> */
     public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator($this->items());
+    }
+
+    public function total(): int
+    {
+        return $this->total;
     }
 
     public function count(): int

@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class UserNotFound extends \Exception implements HttpExceptionInterface
 {
-    public function __construct(int $id)
+    public function __construct(string $id)
     {
         parent::__construct("User with id: $id not found", 404);
     }

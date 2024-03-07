@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace App\Domain\Blog\Model;
 
+use App\Domain\Blog\Event\PostWasCreated;
+use App\Domain\Shared\Aggregate\AggregateRoot;
 use App\Domain\User\Model\User;
+use Symfony\Component\Uid\Uuid;
 
 final class Post implements \JsonSerializable
 {
-    private int $id;
+    private Uuid $id;
     private string $title;
     private string $body;
     private \DateTimeImmutable $createdAt;
     private User $author;
 
-    private function __construct(int $id, string $title, string $body, \DateTimeImmutable $createdAt, User $author)
+    private function __construct(Uuid $id, string $title, string $body, \DateTimeImmutable $createdAt, User $author)
     {
         $this->id = $id;
         $this->title = $title;
@@ -25,10 +28,11 @@ final class Post implements \JsonSerializable
 
     public static function create(string $title, string $body, User $author): self
     {
-        return new self(0, $title, $body, new \DateTimeImmutable('now'), $author);
+        $post = new self(Uuid::v4(), $title, $body, new \DateTimeImmutable('now'), $author);
+        return $post;
     }
 
-    public function id(): int
+    public function id(): Uuid
     {
         return $this->id;
     }
@@ -60,7 +64,7 @@ final class Post implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'id' => $this->id,
+            'id' => $this->id()->toRfc4122(),
             'title' => $this->title,
             'body' => $this->body,
             'createdAt' => $this->createdAt->format('Y-m-d H:i:s'),

@@ -6,6 +6,7 @@ namespace App\Application\Blog;
 
 use App\Domain\Blog\BlogRepository;
 use App\Domain\Blog\Model\Post;
+use Symfony\Component\Uid\Uuid;
 
 class ShowPostUseCase
 {
@@ -16,7 +17,7 @@ class ShowPostUseCase
         $this->blogRepository = $blogRepository;
     }
 
-    public function execute(int $id): ?Post
+    public function execute(Uuid $id): ?Post
     {
         return $this->blogRepository->find($id);
     }

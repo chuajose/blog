@@ -6,7 +6,7 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class PostNotFound extends \Exception implements HttpExceptionInterface
 {
-    public function __construct(int $id)
+    public function __construct(string $id)
     {
         parent::__construct("Post with id: $id not found", 404);
     }
