@@ -51,7 +51,7 @@ class CreatePostController extends BaseRestController
 
         $this->createPostUseCase->execute($dto, $user);
 
-        return new JsonResponse(['message' => 'Post Created'], status:Response::HTTP_CREATED);
+        return new JsonResponse(['message' => 'Post Created'], status: Response::HTTP_CREATED);
     }
 
     /**

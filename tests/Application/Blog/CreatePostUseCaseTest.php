@@ -6,7 +6,6 @@ namespace App\Tests\Application\Blog;
 
 use App\Application\Blog\CreatePostUseCase;
 use App\Application\Blog\Dto\PostDto;
-use App\Domain\Blog\BlogRepository;
 use App\Domain\Shared\Messenger\MessengerBusInterface;
 use App\Domain\User\Model\User;
 use App\Domain\User\ValueObject\EmailAddress;
@@ -22,7 +21,6 @@ class CreatePostUseCaseTest extends TestCase
 
     public function testCreatePostReturnPost(): void
     {
-
         $dto = new PostDto('title', 'content');
         $useCase = new CreatePostUseCase($this->blogRepository, $this->messengerBus);
         $useCase->execute($dto, User::create('jose', EmailAddress::fromString('jose@jose.com')));
@@ -30,8 +28,6 @@ class CreatePostUseCaseTest extends TestCase
         self::assertSame('title', $this->blogRepository->find(Uuid::v4())->title());
         self::assertSame('content', $this->blogRepository->find(Uuid::v4())->body());
         self::assertSame('jose', $this->blogRepository->find(Uuid::v4())->author()->name());
-
-
     }
 
     public function testCreatePostLaunchEvent(): void

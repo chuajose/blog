@@ -104,7 +104,7 @@
             "@auto-scripts"
         ],
         "php-stan": "vendor/bin/phpstan analyse src --level=8",
-        "php-cs-fixer": "php-cs-fixer fix --config=.php-cs-fixer.dist.php --allow-risky=yes --dry-run --using-cache=no"
+        "php-cs-fixer": "vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix "
     },
     "conflict": {
         "symfony/symfony": "*"

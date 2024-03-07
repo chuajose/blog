@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Tests\Domain\Post\Model;
 
@@ -10,7 +12,6 @@ use Symfony\Component\Uid\Uuid;
 
 class BlogRepositorySpy implements BlogRepository
 {
-
     private ?Post $post = null;
 
     public function all(Criteria $criteria): PostCollection

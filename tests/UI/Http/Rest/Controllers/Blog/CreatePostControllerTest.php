@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Tests\UI\Http\Rest\Controllers\Blog;
 
@@ -24,6 +26,7 @@ class CreatePostControllerTest extends TestCase
     private const USER_EMAIL = 'exaple@example.com';
     private const TITLE = 'Post Title';
     private const BODY = 'Post Body';
+
     /**
      * @throws UserNotFound
      * @throws PostValidation
@@ -34,7 +37,7 @@ class CreatePostControllerTest extends TestCase
         $this->userRepository->expects($this->once())->method('find')->willReturn($user);
         $request = new Request(request: ['title' => self::TITLE, 'body' => self::BODY, 'user_id' => $user->id()->toRfc4122()]);
         $action = $this->controller->__invoke($request);
-        $this->assertInstanceOf(JsonResponse::class,$action);
+        $this->assertInstanceOf(JsonResponse::class, $action);
         $this->assertSame(201, $action->getStatusCode());
     }
 
@@ -44,7 +47,7 @@ class CreatePostControllerTest extends TestCase
         $user = User::create(self::USER_NAME, EmailAddress::fromString(self::USER_EMAIL));
         $request = new Request(request: ['title' => self::TITLE, 'user_id' => $user->id()->toRfc4122()]);
         $action = $this->controller->__invoke($request);
-        $this->assertInstanceOf(JsonResponse::class,$action);
+        $this->assertInstanceOf(JsonResponse::class, $action);
         $this->assertSame(201, $action->getStatusCode());
     }
 
