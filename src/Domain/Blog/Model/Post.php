@@ -7,6 +7,7 @@ namespace App\Domain\Blog\Model;
 use App\Domain\Blog\Event\PostWasCreated;
 use App\Domain\Shared\Aggregate\AggregateRoot;
 use App\Domain\User\Model\User;
+use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
 
 final class Post extends AggregateRoot implements \JsonSerializable
@@ -59,16 +60,15 @@ final class Post extends AggregateRoot implements \JsonSerializable
     }
 
     /**
-     * @return array<string, array<string, string|int>|int|string>
+     * @return array<string, array<string, int|string>|DateTimeImmutable|string>
      */
-    #[\Override]
     public function jsonSerialize(): array
     {
         return [
             'id' => $this->id()->toRfc4122(),
-            'title' => $this->title,
-            'body' => $this->body,
-            'createdAt' => $this->createdAt->format('Y-m-d H:i:s'),
+            'title' => $this->title(),
+            'body' => $this->body(),
+            'createdAt' => $this->createdAt(),
             'author' => $this->author->jsonSerialize(),
         ];
     }
