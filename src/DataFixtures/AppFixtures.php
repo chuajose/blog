@@ -17,7 +17,7 @@ class AppFixtures extends Fixture
         $manager->persist($user);
         $manager->flush();
 
-        for ($i = 0; $i < 10; ++$i) {
+        for ($i = 0; $i < 25; ++$i) {
             $post = Post::create($faker->text, $faker->realTextBetween(200, 5000), $user);
             $manager->persist($post);
         }
