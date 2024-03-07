@@ -1,0 +1,21 @@
+{# templates/blog/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="row mt-5">
+        <div class="col-9">
+            <h2>{{ post.title }}</h2>
+            <div>{{ post.createdAt|date('d/m/Y H:i') }}</div>
+            <div>{{ post.body }}</div>
+
+        </div>
+        <div class="col-3">
+            <h2>{{ post.author.name }}</h2>
+            <div>{{ post.author.email }}</div>
+        </div>
+    </div>
+
+{% endblock %}
+
+

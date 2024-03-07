@@ -1,0 +1,23 @@
+{# templates/blog/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="row mt-5">
+        <div class="col-9">
+            <h2>Posts</h2>
+            {% for post in posts %}
+                <li>
+                    <a href="{{ path('blog_show', {id: post.id}) }}">{{ post.title }}</a>
+                </li>
+            {% endfor %}
+
+        </div>
+        <div class="col-3">
+            <a href="{{ path('blog_list') }}" class="btn btn-primary">Add new</a>
+        </div>
+    </div>
+
+{% endblock %}
+
+
