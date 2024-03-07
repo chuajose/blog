@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Domain\Blog\Model\Post;
 use App\Domain\User\Model\User;
+use App\Domain\User\ValueObject\EmailAddress;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -13,7 +14,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create();
-        $user = User::create($faker->userName, $faker->email);
+        $user = User::create($faker->userName, EmailAddress::fromString($faker->email));
         $manager->persist($user);
         $manager->flush();
 
