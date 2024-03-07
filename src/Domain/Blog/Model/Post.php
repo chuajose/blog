@@ -6,9 +6,8 @@ namespace App\Domain\Blog\Model;
 
 use App\Domain\User\Model\User;
 
-final class Post
+final class Post implements \JsonSerializable
 {
-
     private int $id;
     private string $title;
     private string $body;
@@ -24,9 +23,9 @@ final class Post
         $this->author = $author;
     }
 
-    public static function create(int $id, string $title, string $body, User $author): self
+    public static function create(string $title, string $body, User $author): self
     {
-        return new self($id, $title, $body, new \DateTimeImmutable('now'), $author);
+        return new self(0, $title, $body, new \DateTimeImmutable('now'), $author);
     }
 
     public function id(): int
@@ -53,5 +52,19 @@ final class Post
     {
         return $this->author;
     }
-}
 
+    /**
+     * @return array<string, array<string, string|int>|int|string>
+     */
+    #[\Override]
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'body' => $this->body,
+            'createdAt' => $this->createdAt->format('Y-m-d H:i:s'),
+            'author' => $this->author->jsonSerialize(),
+        ];
+    }
+}

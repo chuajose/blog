@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\User\Model;
 
-class User
+class User implements \JsonSerializable
 {
     private int $id;
     private string $name;
@@ -17,9 +17,9 @@ class User
         $this->email = $email;
     }
 
-    public static function create(int $id, string $name, string $email): self
+    public static function create(string $name, string $email): self
     {
-        return new self($id, $name, $email);
+        return new self(0, $name, $email);
     }
 
     public function id(): int
@@ -37,4 +37,16 @@ class User
         return $this->email;
     }
 
+    /**
+     * @return array<string, string|int>
+     */
+    #[\Override]
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+        ];
+    }
 }
