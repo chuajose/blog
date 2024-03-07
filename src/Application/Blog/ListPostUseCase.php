@@ -4,6 +4,7 @@ namespace App\Application\Blog;
 
 use App\Domain\Blog\BlogRepository;
 use App\Domain\Blog\Model\PostCollection;
+use App\Domain\Shared\Criteria\Criteria;
 
 class ListPostUseCase
 {
@@ -14,9 +15,9 @@ class ListPostUseCase
         $this->blogRepository = $blogRepository;
     }
 
-    public function execute(): PostCollection
+    public function execute(Criteria $criteria): PostCollection
     {
-        return $this->blogRepository->all();
+        return $this->blogRepository->all($criteria);
     }
 
 }

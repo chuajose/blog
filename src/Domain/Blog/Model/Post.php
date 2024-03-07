@@ -9,7 +9,7 @@ use App\Domain\Shared\Aggregate\AggregateRoot;
 use App\Domain\User\Model\User;
 use Symfony\Component\Uid\Uuid;
 
-final class Post implements \JsonSerializable
+final class Post extends AggregateRoot implements \JsonSerializable
 {
     private Uuid $id;
     private string $title;
@@ -29,6 +29,7 @@ final class Post implements \JsonSerializable
     public static function create(string $title, string $body, User $author): self
     {
         $post = new self(Uuid::v4(), $title, $body, new \DateTimeImmutable('now'), $author);
+        $post->record(new PostWasCreated($post));
         return $post;
     }
 

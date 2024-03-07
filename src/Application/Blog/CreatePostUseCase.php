@@ -7,11 +7,12 @@ namespace App\Application\Blog;
 use App\Application\Blog\Dto\PostDto;
 use App\Domain\Blog\BlogRepository;
 use App\Domain\Blog\Model\Post;
+use App\Domain\Shared\Messenger\MessengerBusInterface;
 use App\Domain\User\Model\User;
 
 readonly class CreatePostUseCase
 {
-    public function __construct(private BlogRepository $blogRepository)
+    public function __construct(private BlogRepository $blogRepository, private MessengerBusInterface $messengerBus)
     {
     }
 
@@ -19,5 +20,6 @@ readonly class CreatePostUseCase
     {
         $post = Post::create($dto->title(), $dto->body(), $user);
         $this->blogRepository->create($post);
+        $this->messengerBus->dispatch(...$post->pullDomainEvents());
     }
 }
