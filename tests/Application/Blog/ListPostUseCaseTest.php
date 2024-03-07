@@ -7,6 +7,8 @@ namespace App\Tests\Application\Blog;
 use App\Application\Blog\ListPostUseCase;
 use App\Domain\Blog\BlogRepository;
 use App\Domain\Blog\Model\PostCollection;
+use App\Domain\Shared\Criteria\Criteria;
+use App\Domain\Shared\Criteria\Order;
 use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\TestCase;
 
@@ -17,14 +19,14 @@ class ListPostUseCaseTest extends TestCase
     public function testListPostReturnPostCollection(): void
     {
         $useCase = new ListPostUseCase($this->blogRepository);
-        $this->assertInstanceOf(PostCollection::class, $useCase->execute());
+        $this->assertInstanceOf(PostCollection::class, $useCase->execute(new Criteria(Order::fromValues('createdAt', 'desc'), null,null)));
     }
 
     public function testListPostUseCaseCallMethodAll(): void
     {
         $this->blogRepository->expects($this->once())->method('all');
         $useCase = new ListPostUseCase($this->blogRepository);
-        $useCase->execute();
+        $useCase->execute(new Criteria(Order::fromValues('createdAt', 'desc'), null,null));
     }
     /**
      * @throws Exception

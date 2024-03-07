@@ -10,8 +10,10 @@ use App\Domain\Blog\BlogRepository;
 use App\Domain\Blog\Model\Post;
 use App\Domain\Blog\Model\PostCollection;
 use App\Domain\User\Model\User;
+use App\Domain\User\ValueObject\EmailAddress;
 use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Uid\Uuid;
 
 class ShowPostUseCaseTest extends TestCase
 {
@@ -19,10 +21,11 @@ class ShowPostUseCaseTest extends TestCase
 
     public function testShowPostByIdReturnPost(): void
     {
-        $this->blogRepository->expects($this->once())->method('find')->willReturn(Post::create(1, 'title', 'content', User::create(1, 'name', 'email')));
+        $this->blogRepository->expects($this->once())->method('find')->willReturn(Post::create('title', 'content', User::create( 'name', EmailAddress::fromString('email@email.com'))));
 
         $useCase = new ShowPostUseCase($this->blogRepository);
-        $this->assertInstanceOf(Post::class, $useCase->execute(1));
+
+        $this->assertInstanceOf(Post::class, $useCase->execute(Uuid::v4()));
     }
 
     public function testShowPostByIdReturnNull(): void
@@ -31,7 +34,7 @@ class ShowPostUseCaseTest extends TestCase
 
         $useCase = new ShowPostUseCase($this->blogRepository);
 
-        $this->assertNull($useCase->execute(1));
+        $this->assertNull($useCase->execute(Uuid::v4()));
     }
     /**
      * @throws Exception
