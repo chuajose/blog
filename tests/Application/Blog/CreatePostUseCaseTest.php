@@ -10,26 +10,33 @@ use App\Domain\Blog\BlogRepository;
 use App\Domain\Shared\Messenger\MessengerBusInterface;
 use App\Domain\User\Model\User;
 use App\Domain\User\ValueObject\EmailAddress;
+use App\Tests\Domain\Post\Model\BlogRepositorySpy;
 use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Uid\Uuid;
 
 class CreatePostUseCaseTest extends TestCase
 {
-    private BlogRepository $blogRepository;
+    private BlogRepositorySpy $blogRepository;
     private MessengerBusInterface $messengerBus;
 
     public function testCreatePostReturnPost(): void
     {
-        $this->blogRepository->expects($this->once())->method('create');
+
         $dto = new PostDto('title', 'content');
         $useCase = new CreatePostUseCase($this->blogRepository, $this->messengerBus);
         $useCase->execute($dto, User::create('jose', EmailAddress::fromString('jose@jose.com')));
+
+        self::assertSame('title', $this->blogRepository->find(Uuid::v4())->title());
+        self::assertSame('content', $this->blogRepository->find(Uuid::v4())->body());
+        self::assertSame('jose', $this->blogRepository->find(Uuid::v4())->author()->name());
+
+
     }
 
     public function testCreatePostLaunchEvent(): void
     {
         $this->messengerBus->expects($this->once())->method('dispatch');
-        $this->blogRepository->expects($this->once())->method('create');
         $dto = new PostDto('title', 'content');
         $useCase = new CreatePostUseCase($this->blogRepository, $this->messengerBus);
         $useCase->execute($dto, User::create('jose', EmailAddress::fromString('jose@jose.com')));
@@ -41,6 +48,6 @@ class CreatePostUseCaseTest extends TestCase
     protected function setUp(): void
     {
         $this->messengerBus = $this->createMock(MessengerBusInterface::class);
-        $this->blogRepository = $this->createMock(BlogRepository::class);
+        $this->blogRepository = new BlogRepositorySpy();
     }
 }
