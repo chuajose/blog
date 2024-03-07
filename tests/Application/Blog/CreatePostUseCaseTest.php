@@ -7,7 +7,6 @@ namespace App\Tests\Application\Blog;
 use App\Application\Blog\CreatePostUseCase;
 use App\Application\Blog\Dto\PostDto;
 use App\Domain\Blog\BlogRepository;
-use App\Domain\Blog\Model\Post;
 use App\Domain\Shared\Messenger\MessengerBusInterface;
 use App\Domain\User\Model\User;
 use App\Domain\User\ValueObject\EmailAddress;

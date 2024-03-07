@@ -7,7 +7,6 @@ namespace App\Domain\Blog\Model;
 use App\Domain\Blog\Event\PostWasCreated;
 use App\Domain\Shared\Aggregate\AggregateRoot;
 use App\Domain\User\Model\User;
-use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
 
 final class Post extends AggregateRoot implements \JsonSerializable
@@ -31,6 +30,7 @@ final class Post extends AggregateRoot implements \JsonSerializable
     {
         $post = new self(Uuid::v4(), $title, $body, new \DateTimeImmutable('now'), $author);
         $post->record(new PostWasCreated($post));
+
         return $post;
     }
 
@@ -60,7 +60,7 @@ final class Post extends AggregateRoot implements \JsonSerializable
     }
 
     /**
-     * @return array<string, array<string, int|string>|DateTimeImmutable|string>
+     * @return array<string, array<string, int|string>|\DateTimeImmutable|string>
      */
     public function jsonSerialize(): array
     {

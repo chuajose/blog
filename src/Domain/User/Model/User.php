@@ -49,7 +49,7 @@ class User implements \JsonSerializable
         return [
             'id' => $this->id()->toRfc4122(),
             'name' => $this->name(),
-            'email' => $this->email()->value()
+            'email' => $this->email()->value(),
         ];
     }
 }

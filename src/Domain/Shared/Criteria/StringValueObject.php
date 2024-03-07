@@ -6,7 +6,9 @@ namespace App\Domain\Shared\Criteria;
 
 abstract class StringValueObject
 {
-    public function __construct(protected string $value) {}
+    public function __construct(protected string $value)
+    {
+    }
 
     final public function value(): string
     {

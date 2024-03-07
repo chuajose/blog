@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Tests\Domain\User\ValueObject;
 
@@ -6,7 +8,6 @@ use App\Domain\User\ValueObject\EmailAddress;
 
 class EmailAddressTest extends \PHPUnit\Framework\TestCase
 {
-
     public function testCreateEmailAddressWithInvalidEmailReturnException(): void
     {
         $email = 'dsfasfd';

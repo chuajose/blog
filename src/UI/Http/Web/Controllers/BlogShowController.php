@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\UI\Http\Web\Controllers;
 
 use App\Application\Blog\ShowPostUseCase;
-use App\Domain\Blog\BlogRepository;
 use App\Domain\Blog\Exception\PostNotFound;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -13,7 +12,6 @@ use Symfony\Component\Uid\Uuid;
 
 class BlogShowController extends BaseController
 {
-
     public function __construct(private readonly ShowPostUseCase $showPostUseCase)
     {
     }

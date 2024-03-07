@@ -1,10 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Application\Blog\Dto;
 
-use App\Domain\User\Model\User;
-
-class PostDto
+readonly class PostDto
 {
     public function __construct(
         private string $title,
@@ -29,6 +29,4 @@ class PostDto
     {
         return $this->body;
     }
-
-
 }

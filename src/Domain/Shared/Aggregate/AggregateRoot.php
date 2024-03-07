@@ -3,12 +3,11 @@
 declare(strict_types=1);
 
 namespace App\Domain\Shared\Aggregate;
-use App\Domain\Shared\Event\Event;
 
+use App\Domain\Shared\Event\Event;
 
 abstract class AggregateRoot
 {
-
     /**
      * @var array<int, Event>
      */
@@ -21,6 +20,7 @@ abstract class AggregateRoot
     {
         $domainEventsPull = $this->domainEvents;
         $this->domainEvents = [];
+
         return $domainEventsPull;
     }
 
@@ -32,9 +32,8 @@ abstract class AggregateRoot
     /**
      * @return array<int, Event>
      */
-    final  public function getEvents(): array
+    final public function getEvents(): array
     {
-
         return $this->domainEvents;
     }
 }

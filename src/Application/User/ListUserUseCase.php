@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Application\User;
 
@@ -8,10 +10,8 @@ use App\Domain\User\UserRepository;
 
 class ListUserUseCase
 {
-
     public function __construct(private UserRepository $userRepository)
     {
-
     }
 
     public function execute(Criteria $criteria): UserCollection

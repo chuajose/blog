@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests\Application\Blog;
 
-use App\Application\Blog\ListPostUseCase;
 use App\Application\Blog\ShowPostUseCase;
 use App\Domain\Blog\BlogRepository;
 use App\Domain\Blog\Model\Post;
-use App\Domain\Blog\Model\PostCollection;
 use App\Domain\User\Model\User;
 use App\Domain\User\ValueObject\EmailAddress;
 use PHPUnit\Framework\MockObject\Exception;
@@ -21,7 +19,7 @@ class ShowPostUseCaseTest extends TestCase
 
     public function testShowPostByIdReturnPost(): void
     {
-        $this->blogRepository->expects($this->once())->method('find')->willReturn(Post::create('title', 'content', User::create( 'name', EmailAddress::fromString('email@email.com'))));
+        $this->blogRepository->expects($this->once())->method('find')->willReturn(Post::create('title', 'content', User::create('name', EmailAddress::fromString('email@email.com'))));
 
         $useCase = new ShowPostUseCase($this->blogRepository);
 
@@ -36,6 +34,7 @@ class ShowPostUseCaseTest extends TestCase
 
         $this->assertNull($useCase->execute(Uuid::v4()));
     }
+
     /**
      * @throws Exception
      */

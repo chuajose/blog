@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domain\Shared\Criteria;
 
-
 final readonly class Criteria
 {
     public function __construct(
         private Order $order,
         private ?int $offset,
         private ?int $limit
-    ) {}
-
+    ) {
+    }
 
     public function hasOrder(): bool
     {
@@ -33,5 +32,4 @@ final readonly class Criteria
     {
         return $this->limit;
     }
-
 }

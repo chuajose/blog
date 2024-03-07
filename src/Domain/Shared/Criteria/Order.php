@@ -1,11 +1,14 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Domain\Shared\Criteria;
 
-
 final readonly class Order
 {
-    public function __construct(private OrderBy $orderBy, private OrderType $orderType) {}
+    public function __construct(private OrderBy $orderBy, private OrderType $orderType)
+    {
+    }
 
     public static function createDesc(OrderBy $orderBy): self
     {
@@ -14,7 +17,7 @@ final readonly class Order
 
     public static function fromValues(?string $orderBy, ?string $order): self
     {
-        return ($orderBy === null || $order === null) ? self::none() : new self(
+        return (null === $orderBy || null === $order) ? self::none() : new self(
             new OrderBy($orderBy),
             OrderType::from($order)
         );

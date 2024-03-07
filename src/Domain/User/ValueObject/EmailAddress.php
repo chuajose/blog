@@ -1,19 +1,17 @@
 <?php
 
-declare( strict_types=1 );
+declare(strict_types=1);
 
 namespace App\Domain\User\ValueObject;
 
-use InvalidArgumentException;
-
-final class EmailAddress {
-
+final class EmailAddress
+{
     private string $value;
 
     /**
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
-    public function __construct($email)
+    public function __construct(string $email)
     {
         $email = strtolower($email);
         $this->disallowInvalidEmailAddress($email);
@@ -21,15 +19,14 @@ final class EmailAddress {
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
-    private function disallowInvalidEmailAddress($email): void
+    private function disallowInvalidEmailAddress(string $email): void
     {
-        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-            throw new InvalidArgumentException('Email address is invalid');
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new \InvalidArgumentException('Email address is invalid');
         }
     }
-
 
     public static function fromString(string $email): EmailAddress
     {
@@ -40,9 +37,9 @@ final class EmailAddress {
     {
         return $this->value;
     }
+
     public function __toString()
     {
         return $this->value;
     }
-
 }

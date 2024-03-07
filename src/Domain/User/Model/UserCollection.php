@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\User\Model;
 
-
 class UserCollection
 {
     /**
@@ -18,7 +17,6 @@ class UserCollection
             }
         }
     }
-
 
     /** @return \ArrayIterator<int, User> */
     public function getIterator(): \ArrayIterator

@@ -19,15 +19,16 @@ class ListPostUseCaseTest extends TestCase
     public function testListPostReturnPostCollection(): void
     {
         $useCase = new ListPostUseCase($this->blogRepository);
-        $this->assertInstanceOf(PostCollection::class, $useCase->execute(new Criteria(Order::fromValues('createdAt', 'desc'), null,null)));
+        $this->assertInstanceOf(PostCollection::class, $useCase->execute(new Criteria(Order::fromValues('createdAt', 'desc'), null, null)));
     }
 
     public function testListPostUseCaseCallMethodAll(): void
     {
         $this->blogRepository->expects($this->once())->method('all');
         $useCase = new ListPostUseCase($this->blogRepository);
-        $useCase->execute(new Criteria(Order::fromValues('createdAt', 'desc'), null,null));
+        $useCase->execute(new Criteria(Order::fromValues('createdAt', 'desc'), null, null));
     }
+
     /**
      * @throws Exception
      */

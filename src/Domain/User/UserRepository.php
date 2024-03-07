@@ -11,11 +11,9 @@ use Symfony\Component\Uid\Uuid;
 
 interface UserRepository
 {
-
     public function find(Uuid $id): ?User;
 
     public function all(Criteria $criteria): UserCollection;
 
     public function create(User $user): void;
-
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Infrastructure\Persistence\Doctrine\User;
 
@@ -18,9 +20,6 @@ readonly class DoctrineOrmUserRepository implements UserRepository
     }
 
     /**
-     * @param QueryBuilder $dql
-     * @param int $page
-     * @param int $limit
      * @return Paginator<User>
      */
     private function paginate(QueryBuilder $dql, int $page = 1, int $limit = 1): Paginator
@@ -40,7 +39,8 @@ readonly class DoctrineOrmUserRepository implements UserRepository
         $query->select('u')
             ->from(User::class, 'u');
 
-        $paginator = $this->paginate($query, $criteria->offset()??1, $criteria->limit()??10);
+        $paginator = $this->paginate($query, $criteria->offset() ?? 1, $criteria->limit() ?? 10);
+
         return new UserCollection($paginator->getQuery()->getResult(), $paginator->count());
     }
 
@@ -54,5 +54,4 @@ readonly class DoctrineOrmUserRepository implements UserRepository
         $this->entityManager->persist($user);
         $this->entityManager->flush();
     }
-
 }

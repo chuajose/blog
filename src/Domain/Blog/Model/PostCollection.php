@@ -18,7 +18,6 @@ class PostCollection
         }
     }
 
-
     /** @return \ArrayIterator<int, Post> */
     public function getIterator(): \ArrayIterator
     {

@@ -18,7 +18,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ListUserController extends BaseRestController
 {
-
     public function __construct(private readonly ListUserUseCase $listUserUseCase, readonly RequestStack $request)
     {
         parent::__construct($request);
@@ -34,21 +33,21 @@ class ListUserController extends BaseRestController
         content: new OA\JsonContent(
             properties: [
                 new OA\Property(property: 'total', type: 'integer', example: 'Total of users'),
-                new OA\Property(property: 'items', type: 'array', items:
-                    new OA\Items(properties: [
+                new OA\Property(property: 'items', type: 'array', items: new OA\Items(properties: [
                         new OA\Property(property: 'id', type: 'string', example: 'user id'),
                         new OA\Property(property: 'name', type: 'string', example: 'The user name'),
                         new OA\Property(property: 'email', type: 'string', example: 'The user emails'),
                     ],
-                        type: 'object')
+                    type: 'object')
                 )],
             type: 'object'))]
     #[OA\Tag(name: 'User')]
     #[Route('/v1/user', methods: [Request::METHOD_GET])]
     public function __invoke(): Response
     {
-        //TODO: Recoger los datos para el order del request
+        // TODO: Recoger los datos para el order del request
         $users = $this->listUserUseCase->execute(new Criteria(new Order(new OrderBy('createdAt'), OrderType::ASC), $this->getPage(), $this->getLimit()));
+
         return $this->json(['items' => $users->getIterator(), 'total' => $users->total()]);
     }
 }

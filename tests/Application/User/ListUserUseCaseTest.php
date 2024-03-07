@@ -19,15 +19,16 @@ class ListUserUseCaseTest extends TestCase
     public function testListUserReturnUserCollection(): void
     {
         $useCase = new ListUserUseCase($this->userRepository);
-        $this->assertInstanceOf(UserCollection::class, $useCase->execute(new Criteria(Order::fromValues('id', 'desc'), null,null)));
+        $this->assertInstanceOf(UserCollection::class, $useCase->execute(new Criteria(Order::fromValues('id', 'desc'), null, null)));
     }
 
     public function testListUserUseCaseCallMethodAll(): void
     {
         $this->userRepository->expects($this->once())->method('all');
         $useCase = new ListUserUseCase($this->userRepository);
-        $useCase->execute(new Criteria(Order::fromValues('id', 'desc'), null,null));
+        $useCase->execute(new Criteria(Order::fromValues('id', 'desc'), null, null));
     }
+
     /**
      * @throws Exception
      */

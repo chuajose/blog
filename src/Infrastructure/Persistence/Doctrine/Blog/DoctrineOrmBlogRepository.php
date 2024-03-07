@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Infrastructure\Persistence\Doctrine\Blog;
 
@@ -18,9 +20,6 @@ readonly class DoctrineOrmBlogRepository implements BlogRepository
     }
 
     /**
-     * @param QueryBuilder $dql
-     * @param int $page
-     * @param int $limit
      * @return Paginator<Post>
      */
     private function paginate(QueryBuilder $dql, int $page = 1, int $limit = 1): Paginator
@@ -34,18 +33,19 @@ readonly class DoctrineOrmBlogRepository implements BlogRepository
         return $paginator;
     }
 
-   public function all(Criteria $criteria): PostCollection
+    public function all(Criteria $criteria): PostCollection
     {
         $query = $this->entityManager->createQueryBuilder();
         $query->select('p')
             ->from(Post::class, 'p');
 
-        if($criteria->hasOrder()){
+        if ($criteria->hasOrder()) {
             $query->orderBy('p.'.$criteria->order()->orderBy()->value(), $criteria->order()->orderType()->value);
-        }else{
+        } else {
             $query->orderBy('p.createdAt', 'DESC');
         }
-        $paginator = $this->paginate($query, $criteria->offset()??1, $criteria->limit()??10);
+        $paginator = $this->paginate($query, $criteria->offset() ?? 1, $criteria->limit() ?? 10);
+
         return new PostCollection($paginator->getQuery()->getResult(), $paginator->count());
     }
 

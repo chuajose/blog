@@ -14,8 +14,7 @@ class ExceptionListener
 {
     public function onKernelException(ExceptionEvent $event, string $eventName): void
     {
-
-        //TODO: Cambiar cuando no es json
+        // TODO: Cambiar cuando no es json
 
         $exception = $event->getThrowable();
         $data = [
