@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\User\Model;
 
+use App\Domain\User\ValueObject\EmailAddress;
 use Symfony\Component\Uid\Uuid;
 
 class User implements \JsonSerializable
@@ -19,9 +20,9 @@ class User implements \JsonSerializable
         $this->email = $email;
     }
 
-    public static function create(string $name, string $email): self
+    public static function create(string $name, EmailAddress $email): self
     {
-        return new self(Uuid::v4(), $name, $email);
+        return new self(Uuid::v4(), $name, $email->value());
     }
 
     public function id(): Uuid
@@ -34,9 +35,9 @@ class User implements \JsonSerializable
         return $this->name;
     }
 
-    public function email(): string
+    public function email(): EmailAddress
     {
-        return $this->email;
+        return EmailAddress::fromString($this->email);
     }
 
     /**
@@ -47,8 +48,8 @@ class User implements \JsonSerializable
     {
         return [
             'id' => $this->id()->toRfc4122(),
-            'name' => $this->name,
-            'email' => $this->email,
+            'name' => $this->name(),
+            'email' => $this->email()->value()
         ];
     }
 }
