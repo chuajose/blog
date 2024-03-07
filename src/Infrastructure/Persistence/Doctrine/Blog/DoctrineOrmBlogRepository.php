@@ -25,7 +25,8 @@ readonly class DoctrineOrmBlogRepository implements BlogRepository
 
     public function create(Post $post): void
     {
-        // TODO: Implement create() method.
+        $this->entityManager->persist($post);
+        $this->entityManager->flush();
     }
 
     public function update(Post $post): void
