@@ -18,12 +18,17 @@ class BaseRestController extends AbstractController
 
     public function getPage():?int
     {
-        return  (int)$this->requestStack->getCurrentRequest()?->get('page');
-    }
+        if ($this->requestStack->getCurrentRequest() && $this->requestStack->getCurrentRequest()->get('page')){
+            return (int)$this->requestStack->getCurrentRequest()->get('page');
+        }
+        return  null;    }
 
     public function getLimit():?int
     {
-       return  (int)$this->requestStack->getCurrentRequest()?->get('limit');
+        if ($this->requestStack->getCurrentRequest() && $this->requestStack->getCurrentRequest()->get('limit')){
+            return (int)$this->requestStack->getCurrentRequest()->get('limit');
+        }
+       return  null;
 
     }
 }
