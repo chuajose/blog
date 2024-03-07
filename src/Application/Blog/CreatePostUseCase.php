@@ -12,7 +12,7 @@ use App\Domain\User\Model\User;
 
 class CreatePostUseCase
 {
-    public function __construct(private BlogRepository $blogRepository, private MessengerBusInterface $messengerBus)
+    public function __construct(private readonly BlogRepository $blogRepository, private MessengerBusInterface $messengerBus)
     {
     }
 
