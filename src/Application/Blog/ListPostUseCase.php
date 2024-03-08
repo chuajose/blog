@@ -10,11 +10,8 @@ use App\Domain\Shared\Criteria\Criteria;
 
 class ListPostUseCase
 {
-    private BlogRepository $blogRepository;
-
-    public function __construct(BlogRepository $blogRepository)
+    public function __construct(private readonly BlogRepository $blogRepository)
     {
-        $this->blogRepository = $blogRepository;
     }
 
     public function execute(Criteria $criteria): PostCollection

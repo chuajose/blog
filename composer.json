@@ -103,7 +103,7 @@
         "post-update-cmd": [
             "@auto-scripts"
         ],
-        "php-stan": "vendor/bin/phpstan analyse src --level=8",
+        "php-stan": "vendor/bin/phpstan analyse src --level=9",
         "php-cs-fixer": "vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix "
     },
     "conflict": {

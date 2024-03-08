@@ -10,11 +10,8 @@ use Symfony\Component\Uid\Uuid;
 
 class ShowPostUseCase
 {
-    private BlogRepository $blogRepository;
-
-    public function __construct(BlogRepository $blogRepository)
+    public function __construct(private readonly BlogRepository $blogRepository)
     {
-        $this->blogRepository = $blogRepository;
     }
 
     public function execute(Uuid $id): ?Post
