@@ -19,25 +19,10 @@ readonly class DoctrineOrmBlogRepository implements BlogRepository
     {
     }
 
-    /**
-     * @return Paginator<Post>
-     */
-    private function paginate(QueryBuilder $dql, int $page = 1, int $limit = 1): Paginator
-    {
-        $paginator = new Paginator($dql);
-
-        $paginator->getQuery()
-            ->setFirstResult($limit * ($page - 1)) // Offset
-            ->setMaxResults($limit); // Limit
-
-        return $paginator;
-    }
-
     public function all(Criteria $criteria): PostCollection
     {
         $query = $this->entityManager->createQueryBuilder();
-        $query->select('p')
-            ->from(Post::class, 'p');
+        $query->select('p')->from(Post::class, 'p');
 
         if ($criteria->hasOrder()) {
             $query->orderBy('p.'.$criteria->order()->orderBy()->value(), $criteria->order()->orderType()->value);
@@ -45,8 +30,30 @@ readonly class DoctrineOrmBlogRepository implements BlogRepository
             $query->orderBy('p.createdAt', 'DESC');
         }
         $paginator = $this->paginate($query, $criteria->offset() ?? 1, $criteria->limit() ?? 10);
+        $data = [];
+        $result = $paginator->getQuery()->getResult();
+        if (is_array($result)) {
+            foreach ($result as $post) {
+                if ($post instanceof Post) {
+                    $data[] = $post;
+                }
+            }
+        }
 
-        return new PostCollection($paginator->getQuery()->getResult(), $paginator->count());
+        return new PostCollection($data, $paginator->count());
+    }
+
+    /**
+     * @return Paginator<Post>
+     */
+    private function paginate(QueryBuilder $dql, int $page = 1, int $limit = 1): Paginator
+    {
+        $paginator = new Paginator($dql);
+
+        $paginator->getQuery()->setFirstResult($limit * ($page - 1)) // Offset
+            ->setMaxResults($limit); // Limit
+
+        return $paginator;
     }
 
     public function find(Uuid $id): ?Post

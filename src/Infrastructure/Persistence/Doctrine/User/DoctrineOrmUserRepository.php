@@ -40,8 +40,17 @@ readonly class DoctrineOrmUserRepository implements UserRepository
             ->from(User::class, 'u');
 
         $paginator = $this->paginate($query, $criteria->offset() ?? 1, $criteria->limit() ?? 10);
+        $result = $paginator->getQuery()->getResult();
+        $data = [];
+        if (is_array($result)) {
+            foreach ($result as $user) {
+                if ($user instanceof User) {
+                    $data[] = $user;
+                }
+            }
+        }
 
-        return new UserCollection($paginator->getQuery()->getResult(), $paginator->count());
+        return new UserCollection($data, $paginator->count());
     }
 
     public function find(Uuid $id): ?User
