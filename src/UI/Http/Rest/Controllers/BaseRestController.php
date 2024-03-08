@@ -19,7 +19,10 @@ class BaseRestController extends AbstractController
     public function getPage(): ?int
     {
         if ($this->requestStack->getCurrentRequest() && $this->requestStack->getCurrentRequest()->get('page')) {
-            return (int) $this->requestStack->getCurrentRequest()->get('page');
+            $page = $this->requestStack->getCurrentRequest()->get('page');
+            if (is_string($page) || is_numeric($page)) {
+                return (int) $page;
+            }
         }
 
         return null;
@@ -28,7 +31,10 @@ class BaseRestController extends AbstractController
     public function getLimit(): ?int
     {
         if ($this->requestStack->getCurrentRequest() && $this->requestStack->getCurrentRequest()->get('limit')) {
-            return (int) $this->requestStack->getCurrentRequest()->get('limit');
+            $limit = $this->requestStack->getCurrentRequest()->get('limit');
+            if (is_string($limit) || is_numeric($limit)) {
+                return (int) $limit;
+            }
         }
 
         return null;
