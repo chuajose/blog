@@ -19,7 +19,7 @@ class BlogController extends AbstractController
     {
     }
 
-    #[Route('/blog/{page}', name: 'blog_list', requirements: ['page' => '\d+'])]
+    #[Route('/{page}', name: 'blog_list', requirements: ['page' => '\d+'])]
     public function __invoke(int $page = 1): Response
     {
         $limit = 10;

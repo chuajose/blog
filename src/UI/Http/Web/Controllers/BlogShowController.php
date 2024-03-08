@@ -19,7 +19,7 @@ class BlogShowController extends BaseController
     /**
      * @throws PostNotFound
      */
-    #[Route('/blog/show/{id}', name: 'blog_show')]
+    #[Route('/show/{id}', name: 'blog_show')]
     public function __invoke(string $id): Response
     {
         $post = $this->showPostUseCase->execute(Uuid::fromString($id));
