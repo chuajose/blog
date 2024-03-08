@@ -8,7 +8,7 @@ Esto instalará un servidor http Nginx y un servidor de aplicaciones PHP-FPM. Pa
 ```bash
 http://localhost
 ```
-### Instalación Symfony
+## Instalación Symfony
 Para ello, se debe ejecutar el siguiente comando:
 Accedemos al contenedor de php-fpm
 ```bash
@@ -33,4 +33,10 @@ php bin/console doctrine:fixtures:load
 Una vez hecho esto, ya podemos acceder a la aplicación. Para ello, debemos acceder a la siguiente URL:
 ```bash
 http://localhost/
+```
+
+## Api Docs
+La aplicación dispone de una documentación de la API. Para acceder a ella, se debe acceder a la siguiente URL:
+```bash
+http://localhost/api/doc
 ```
