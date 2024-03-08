@@ -4,7 +4,7 @@ El aplicativo dispone de una carpeta docker, donde están los archivos necesario
 ```bash
 /usr/bin/docker compose -f docker/docker-compose.yml -p docker up -d
 ```
-Esto instalará un servidor http Nginx y un servidor de aplicaciones PHP-FPM. Para acceder a la aplicación, se debe ingresar a la siguiente URL:
+Esto instalará un servidor http Nginx una base de datos Postgresql y un servidor de aplicaciones PHP-FPM. Para acceder a la aplicación, se debe ingresar a la siguiente URL:
 ```bash
 http://localhost
 ```
