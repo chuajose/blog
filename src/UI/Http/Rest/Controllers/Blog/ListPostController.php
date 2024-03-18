@@ -27,7 +27,7 @@ class ListPostController extends BaseRestController
     #[OA\Parameter(
         name: 'page',
         description: 'Page list',
-        in: 'path',
+        in: 'query',
         schema: new OA\Schema(type: 'integer')
     )]
     #[OA\Response(response: 200, description: 'List of posts',
